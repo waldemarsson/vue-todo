@@ -44,12 +44,13 @@ export default class Home extends Vue {
   }
 
   async updateAll(): Promise<void> {
+    this.loading = true;
     this.lists = await ListService.getAllLists();
+    this.loading = false;
   }
 
   mounted(): void {
     this.updateAll();
-    this.loading = false;
   }
 }
 </script>
