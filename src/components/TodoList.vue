@@ -15,7 +15,7 @@
           :placeholder="getName()"
           v-on:keyup.enter="changeListName"
           v-model="listNameModel"
-          v-on:keydown="(e) => preventWhitespace(e)"
+          @blur="(e) => (e.target.value = removeWhitespace(e.target.value))"
         />
         <button type="button" @click="changeListName">Change</button>
       </div>
@@ -32,7 +32,7 @@
         placeholder="New item?"
         v-model="newItemModel"
         v-on:keyup.enter="addItem"
-        v-on:keydown="(e) => preventWhitespace(e)"
+        @blur="(e) => (e.target.value = removeWhitespace(e.target.value))"
       />
       <button type="button" @click="addItem">Add</button>
     </div>
@@ -75,20 +75,15 @@ export default class TodoListComponent extends TodoListProps {
     return this.list.name;
   }
 
-  preventWhitespace(e: KeyboardEvent): void {
-    if (
-      (e.target as HTMLInputElement).value.endsWith(" ") &&
-      e.code === "Space"
-    ) {
-      e.preventDefault();
-    }
+  removeWhitespace(input: string): string {
+    return input.replace(/\s\s+/g, " ").trim();
   }
 
   async addItem(): Promise<void> {
     if (this.newItemModel.length > 0 && this.todoList._id) {
       const newItem: TodoItem = await ItemService.addItem({
         list: this.todoList._id,
-        name: this.newItemModel.trim(),
+        name: this.removeWhitespace(this.newItemModel),
         checked: false,
       });
       if (newItem) {
@@ -112,9 +107,9 @@ export default class TodoListComponent extends TodoListProps {
     if (this.listNameModel.length > 0 && this.todoList._id) {
       const updatedList: TodoList = await ListService.updateList(
         this.todoList._id,
-        { ...this.list, name: this.listNameModel.trim() },
+        { ...this.list, name: this.removeWhitespace(this.listNameModel) },
       );
-      if (updatedList) {
+      if (updatedList.name) {
         this.list.name = updatedList.name;
         this.listNameEdit = false;
       }
