@@ -11,8 +11,8 @@ import * as ListService from "@/services/api/todoListService";
 
 @Component
 export default class NewListButtonComponent extends Vue {
-  addNewList() {
-    ListService.addList();
+  async addNewList() {
+    await ListService.addList();
     this.$emit("update-all");
   }
 }
