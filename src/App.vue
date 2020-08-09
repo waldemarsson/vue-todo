@@ -26,7 +26,7 @@ body {
   color: white;
   font-weight: bold;
   background-color: grey;
-  font-size: inherit;
+  font-size: 0.75rem;
 
   &:hover {
     background-color: rgb(98, 98, 98);
