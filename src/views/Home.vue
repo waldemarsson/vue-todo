@@ -2,7 +2,11 @@
   <section class="main">
     <NewListButtonComponent @update-all="updateAll" />
     <section class="container" v-if="!isLoading">
-      <article class="list-container" v-for="list in todoLists" :key="list._id">
+      <article
+        class="container__list"
+        v-for="list in todoLists"
+        :key="list._id"
+      >
         <TodoListComponent :todoList="list" @update-all="updateAll" />
       </article>
     </section>
@@ -63,7 +67,7 @@ export default class Home extends Vue {
   width: 100%;
   max-width: 100vw;
 
-  .list-container {
+  &__list {
     width: 100%;
     margin: 1rem 0 0.5rem;
     @media screen and (min-width: 415px) {
