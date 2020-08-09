@@ -1,31 +1,46 @@
 <template>
   <section class="list">
-    <header>
-      <div class="name-container" v-if="!isListNameEditable">
-        <h2 @click="listNameEdit = !listNameEdit">
-          {{ getName() }}
-        </h2>
-        <button type="button" class="delete-list" @click="deleteList">X</button>
-      </div>
-      <div class="input-container input-container--list-name" v-else>
-        <input
-          type="text"
-          maxlength="64"
-          minlength="1"
-          :placeholder="getName()"
-          v-on:keyup.enter="changeListName"
-          v-model="listNameModel"
-          @blur="(e) => (e.target.value = removeWhitespace(e.target.value))"
-        />
-        <button type="button" @click="changeListName">Change</button>
-      </div>
+    <header class="list__header" v-if="!isListNameEditable">
+      <h2 class="list__name" @click="listNameEdit = !listNameEdit">
+        {{ getName() }}
+      </h2>
+      <button
+        class="btn btn--delete btn--delete-big list__btn-delete"
+        type="button"
+        @click="deleteList"
+      >
+        X
+      </button>
+    </header>
+    <header
+      class="list__header list__input-container list__input-container--list-name"
+      v-else
+    >
+      <input
+        class="input"
+        type="text"
+        maxlength="64"
+        minlength="1"
+        :placeholder="getName()"
+        v-on:keyup.enter="changeListName"
+        v-model="listNameModel"
+        @blur="(e) => (e.target.value = removeWhitespace(e.target.value))"
+      />
+      <button
+        class="btn btn--handle-input"
+        type="button"
+        @click="changeListName"
+      >
+        Change
+      </button>
     </header>
     <hr />
     <ul v-for="item in items" :key="item._id">
       <TodoItemComponent :todoItem="item" @update-list="updateList" />
     </ul>
-    <div class="input-container">
+    <div class="list__input-container">
       <input
+        class="input"
         type="text"
         maxlength="64"
         minlength="1"
@@ -34,7 +49,9 @@
         v-on:keyup.enter="addItem"
         @blur="(e) => (e.target.value = removeWhitespace(e.target.value))"
       />
-      <button type="button" @click="addItem">Add</button>
+      <button class="btn btn--handle-input" type="button" @click="addItem">
+        Add
+      </button>
     </div>
   </section>
 </template>
@@ -129,72 +146,38 @@ export default class TodoListComponent extends TodoListProps {
 <style lang="less" scoped>
 .list {
   background-color: lightgray;
-  border: 4px solid gray;
+  border: 0.25rem solid gray;
   padding: 1rem;
   border-radius: 10px;
 
-  header {
-    .name-container {
-      display: flex;
-      justify-content: center;
-      position: relative;
-      h2 {
-        width: 100%;
-        margin: 0.5rem;
-        text-align: center;
-        cursor: pointer;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-      }
-      .delete-list {
-        cursor: pointer;
-        position: absolute;
-        right: 0;
-        border-radius: 5px;
-        border: none;
-        font-size: 2rem;
-        font-weight: bold;
-        color: red;
-      }
-    }
+  &__header {
+    display: flex;
+    justify-content: center;
+    position: relative;
   }
-  hr {
-    margin-bottom: 0;
+
+  &__name {
+    width: 100%;
+    margin: 0.5rem;
+    text-align: center;
+    cursor: pointer;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
   }
-  ul {
-    margin: 0;
-    padding: 0;
+
+  &__btn-delete {
+    position: absolute;
+    right: 0;
   }
-  .input-container {
+
+  &__input-container {
     height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
     padding-top: 1.5rem;
-    input {
-      flex-grow: 1;
-      height: 100%;
-      width: 100%;
-      border: 0;
-      text-indent: 0.5rem;
-      margin: 0;
-      padding: 0;
-    }
-    button {
-      height: 100%;
-      width: 4rem;
-      margin: 0;
-      padding: 0;
-      border: 0;
-      color: white;
-      background-color: darkslategray;
-      cursor: pointer;
 
-      &:hover {
-        background-color: slategrey;
-      }
-    }
     &--list-name {
       padding: 1rem 0;
     }

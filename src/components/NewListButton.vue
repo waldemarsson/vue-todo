@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="new-list" @click="addNewList">
+  <button type="button" class="btn btn--add" @click="addNewList">
     New list
   </button>
 </template>
@@ -17,21 +17,3 @@ export default class NewListButtonComponent extends Vue {
   }
 }
 </script>
-
-<style lang="less" scoped>
-button {
-  cursor: pointer;
-  margin-top: 1rem;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  height: 50px;
-  width: 350px;
-  background-color: lightgreen;
-
-  &:hover {
-    background-color: rgb(104, 218, 104);
-  }
-}
-</style>

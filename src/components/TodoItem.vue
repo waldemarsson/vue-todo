@@ -1,8 +1,10 @@
 <template>
-  <li>
+  <li class="item">
     <input type="checkbox" :checked="checked" @click="setChecked" />
-    <div class="item-name">{{ name }}</div>
-    <button type="button" class="item-delete" @click="deleteItem">X</button>
+    <div class="item__name">{{ name }}</div>
+    <button class="btn btn--delete" type="button" @click="deleteItem">
+      X
+    </button>
   </li>
 </template>
 
@@ -52,14 +54,14 @@ export default class TodoItemComponent extends TodoItemProps {
 </script>
 
 <style lang="less" scoped>
-li {
+.item {
   list-style: none;
   display: flex;
   justify-content: space-between;
   padding: 1rem 0.5rem;
-  border-bottom: 1px solid black;
+  border-bottom: 0.0625rem solid black;
 
-  .item-name {
+  &__name {
     text-align: left;
     flex-flow: 1;
     width: 100%;
@@ -67,14 +69,6 @@ li {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-  }
-
-  .item-delete {
-    color: red;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
   }
 }
 </style>
